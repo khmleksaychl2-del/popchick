@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pop Chick</title>
+  <style>
+    body {
+      background-color: #fffae5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
+    }
+    canvas {
+      background: #cceeff;
+      border: 2px solid #333;
+      border-radius: 10px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: orange;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: darkorange;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="300" height="300"></canvas>
+  <button id="flapBtn">กดปีก!</button>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const flapBtn = document.getElementById('flapBtn');
+
+    let chickY = 150;
+    let velocity = 0;
+    let gravity = 0.5;
+    let flapPower = -8;
+
+    function drawChick() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // ตัวไก่ (วงกลม)
+      ctx.beginPath();
+      ctx.arc(150, chickY, 30, 0, Math.PI * 2);
+      ctx.fillStyle = 'yellow';
+      ctx.fill();
+      ctx.stroke();
+
+      // ตา
+      ctx.beginPath();
+      ctx.arc(140, chickY - 10, 5, 0, Math.PI * 2);
+      ctx.fillStyle = 'black';
+      ctx.fill();
+
+      // ปาก
+      ctx.beginPath();
+      ctx.moveTo(160, chickY);
+      ctx.lineTo(175, chickY - 5);
+      ctx.lineTo(160, chickY + 5);
+      ctx.closePath();
+      ctx.fillStyle = 'orange';
+      ctx.fill();
+    }
+
+    function update() {
+      velocity += gravity;
+      chickY += velocity;
+
+      if (chickY > canvas.height - 30) {
+        chickY = canvas.height - 30;
+        velocity = 0;
+      }
+      if (chickY < 30) {
+        chickY = 30;
+        velocity = 0;
+      }
+
+      drawChick();
+      requestAnimationFrame(update);
+    }
+
+    function flap() {
+      velocity = flapPower;
+    }
+
+    canvas.addEventListener('click', flap);
+    flapBtn.addEventListener('click', flap);
+
+    update();
+  </script>
+</body>
+</html>
