@@ -1,4 +1,4 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
@@ -48,6 +48,26 @@ DOCTYPE html>
     <span class="emoji">🐔</span> กดปีก!
   </button>
 
+  <!-- Firebase Config -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDxX_8O5fRq2jRa6XejsEjytHovfLz-2bQ",
+      authDomain: "bird-game-ce895.firebaseapp.com",
+      projectId: "bird-game-ce895",
+      storageBucket: "bird-game-ce895.appspot.com",
+      messagingSenderId: "98680409790",
+      appId: "1:98680409790:web:82db90d15e0826cf6d58ef",
+      measurementId: "G-ZK5SJFSJNC"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+
+  <!-- โค้ดเกม -->
   <script>
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
@@ -66,14 +86,12 @@ DOCTYPE html>
     function drawChick() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // ตัวไก่
       ctx.beginPath();
       ctx.arc(150, chickY, 30, 0, Math.PI * 2);
       ctx.fillStyle = 'yellow';
       ctx.fill();
       ctx.stroke();
 
-      // ปีก
       ctx.save();
       ctx.translate(150, chickY);
       ctx.rotate((Math.PI / 12) * wingAngle);
@@ -83,13 +101,11 @@ DOCTYPE html>
       ctx.fill();
       ctx.restore();
 
-      // ตา
       ctx.beginPath();
       ctx.arc(140, chickY - 10, 5, 0, Math.PI * 2);
       ctx.fillStyle = 'black';
       ctx.fill();
 
-      // ปาก
       ctx.beginPath();
       ctx.moveTo(160, chickY);
       ctx.lineTo(175, chickY - 5);
@@ -98,7 +114,6 @@ DOCTYPE html>
       ctx.fillStyle = 'orange';
       ctx.fill();
 
-      // คะแนน
       ctx.fillStyle = 'black';
       ctx.font = '20px Arial';
       ctx.fillText("คะแนน: " + score, 10, 30);
@@ -137,7 +152,7 @@ DOCTYPE html>
     canvas.addEventListener('click', flap);
     flapBtn.addEventListener('click', flap);
 
-    cript>();
+    update();
   </script>
 </body>
 </html>
